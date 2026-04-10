@@ -110,7 +110,7 @@ const WebhookList = ({ settingKey, label }: Props) => {
           <button
             className={`button webhook-test webhook-test-${webhookTestStates[webhook.id] ?? 'idle'}`}
             onClick={() => testWebhook(webhook.id, webhook.url, webhook.method)}
-            title={t('options.webhook.test', 'Test Webhook')}
+            title={t('options.webhook.test_button', 'Test Webhook')}
           >
             ↑
           </button>
