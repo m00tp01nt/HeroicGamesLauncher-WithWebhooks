@@ -5,6 +5,9 @@ import { ToggleSwitch } from 'frontend/components/UI'
 import ContextProvider from 'frontend/state/ContextProvider'
 import { ExperimentalFeatures as IExperimentalFeatures } from 'common/types'
 
+// Webhooks
+import { WebhookList } from '../components'
+
 const ExperimentalFeatures = () => {
   const FEATURES: (keyof IExperimentalFeatures)[] = [
     'enableHelp',
@@ -57,6 +60,15 @@ const ExperimentalFeatures = () => {
           </div>
         )
       })}
+
+      <WebhookList
+        settingKey="webhooksOnGameStart"
+        label={t('options.webhook.on_start', 'Webhooks on game start')}
+      />
+      <WebhookList
+        settingKey="webhooksOnGameEnd"
+        label={t('options.webhook.on_end', 'Webhooks on game end')}
+      />
     </>
   )
 }

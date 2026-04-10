@@ -131,6 +131,25 @@ export interface AppSettings extends GameSettings {
   disableUMU: boolean
   verboseLogs: boolean
   showValveProton: boolean
+
+  // Webhooks
+  webhooksOnGameStart: WebhookConfig[]
+  webhooksOnGameEnd: WebhookConfig[]
+}
+
+// Webhooks
+export interface WebhookConfig {
+  id: string
+  url: string
+  method: WebhookHttpMethod
+}
+
+export enum WebhookHttpMethod {
+  POST = 'POST',
+  GET = 'GET',
+  PUT = 'PUT',
+  PATCH = 'PATCH',
+  DELETE = 'DELETE'
 }
 
 export type LibraryTopSectionOptions =

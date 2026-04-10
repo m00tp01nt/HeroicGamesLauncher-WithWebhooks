@@ -62,3 +62,6 @@ export { default as ResetHeroic } from './ResetHeroic'
 export { default as BeforeLaunchScriptPath } from './BeforeLaunchScriptPath'
 export { default as AfterLaunchScriptPath } from './AfterLaunchScriptPath'
 export { default as AllowInstallationBrokenAnticheat } from './AllowInstallationBrokenAnticheat'
+
+// Webhooks
+export { default as WebhookList } from './WebhookList'
