@@ -559,6 +559,13 @@
             "windowed": "Windowed"
         },
         "quote-args-with-spaces": "Warning: Make sure to quote args with spaces! E.g.: \"path/with spaces/\"",
+        "webhook": {
+            "add": "Add Webhook",
+            "delete": "Delete webhook",
+            "on_end": "Webhooks on game end",
+            "on_start": "Webhooks on game start",
+            "url_placeholder": "https://example.com/webhook"
+        },
         "wrapper": {
             "args": "Arguments",
             "arguments_example": "Arguments example: --arg; --extra-file=\"file-path/ with/spaces\"",
