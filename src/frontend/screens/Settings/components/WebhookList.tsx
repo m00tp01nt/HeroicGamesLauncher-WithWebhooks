@@ -37,27 +37,9 @@ const WebhookList = ({ settingKey, label }: Props) => {
       <h6>
         <label>{label}</label>
       </h6>
-      <br />
 
       {webhooks.map((webhook: WebhookConfig) => (
-        <div key={webhook.id} className="webhookRow">
-          <SelectField
-            htmlId={`method-${webhook.id}`}
-            value={webhook.method}
-            onChange={(e) =>
-              updateWebhook(webhook.id, {
-                method: e.target.value as WebhookHttpMethod
-              })
-            }
-            extraClass="webhookMethod"
-          >
-            {Object.values(WebhookHttpMethod).map((method: string) => (
-              <MenuItem key={method} value={method}>
-                {method}
-              </MenuItem>
-            ))}
-          </SelectField>
-
+        <div key={webhook.id} className="webhook-row">
           <TextInputField
             htmlId={`url-${webhook.id}`}
             value={webhook.url}
@@ -66,11 +48,28 @@ const WebhookList = ({ settingKey, label }: Props) => {
               'options.webhook.url_placeholder',
               'https://example.com/webhook'
             )}
-            extraClass="webhookUrl"
+            extraClass="webhook-url"
           />
 
+          <SelectField
+            htmlId={`method-${webhook.id}`}
+            value={webhook.method}
+            onChange={(e) =>
+              updateWebhook(webhook.id, {
+                method: e.target.value as WebhookHttpMethod
+              })
+            }
+            extraClass="webhook-method"
+          >
+            {Object.values(WebhookHttpMethod).map((method: string) => (
+              <MenuItem key={method} value={method}>
+                {method}
+              </MenuItem>
+            ))}
+          </SelectField>
+
           <button
-            className="button is-danger is-small webhookDelete"
+            className="button is-danger webhook-delete"
             onClick={() => deleteWebhook(webhook.id)}
             title={t('options.webhook.delete', 'Delete webhook')}
           >
@@ -79,9 +78,7 @@ const WebhookList = ({ settingKey, label }: Props) => {
         </div>
       ))}
 
-      <br />
-
-      <button className="button is-primary is-small" onClick={addWebhook}>
+      <button className="button is-primary webhook-add" onClick={addWebhook}>
         {t('options.webhook.add', 'Add Webhook')}
       </button>
     </div>
