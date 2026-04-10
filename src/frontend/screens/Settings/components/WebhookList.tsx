@@ -48,7 +48,7 @@ const WebhookList = ({ settingKey, label }: Props) => {
         method: method,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          gameTitle: t('options.webhook.test.gametitle', 'Example game title')
+          gameTitle: t('options.webhook.test_gametitle', 'Example game title')
         })
       })
 
