@@ -15,7 +15,8 @@ import {
   KnowFixesInfo,
   LaunchParams,
   StatusPromise,
-  WebhookConfig
+  WebhookConfig,
+  WebhookHttpMethod
 } from 'common/types'
 // This handles launching games, prefix creation etc..
 
@@ -2105,12 +2106,16 @@ function callWebhooks(webhooks: WebhookConfig[], gameInfo: GameInfo): void {
 }
 
 function callWebhook(webhook: WebhookConfig, gameInfo: GameInfo): void {
+  let body: string | undefined
+  if (webhook.method === WebhookHttpMethod.GET) body = undefined
+  else
+    body = JSON.stringify({
+      gameTitle: gameInfo.title
+    })
   void fetch(webhook.url, {
     method: webhook.method,
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      gameTitle: gameInfo.title
-    })
+    body: body
   })
     .catch(() => {
       return

@@ -561,10 +561,12 @@
         "quote-args-with-spaces": "Warning: Make sure to quote args with spaces! E.g.: \"path/with spaces/\"",
         "webhook": {
             "add": "Add Webhook",
-            "delete": "Delete webhook",
-            "on_end": "Webhooks on game end",
-            "on_start": "Webhooks on game start",
-            "url_placeholder": "https://example.com/webhook"
+            "delete": "Delete Webhook",
+            "on_end": "End Webhooks",
+            "on_start": "Start Webhooks",
+            "url_placeholder": "https://example.com/webhook",
+            "test_gametitle": "Example Game Title",
+            "test_tooltip": "Test Webhook"
         },
         "wrapper": {
             "args": "Arguments",

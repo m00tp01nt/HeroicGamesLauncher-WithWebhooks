@@ -48,7 +48,7 @@ const WebhookList = ({ settingKey, label }: Props) => {
         method: method,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          gameTitle: t('options.webhook.test_gametitle', 'Example game title')
+          gameTitle: t('options.webhook.test_gametitle')
         })
       })
 
@@ -83,10 +83,7 @@ const WebhookList = ({ settingKey, label }: Props) => {
             htmlId={`url-${webhook.id}`}
             value={webhook.url}
             onChange={(newUrl) => updateWebhook(webhook.id, { url: newUrl })}
-            placeholder={t(
-              'options.webhook.url_placeholder',
-              'https://example.com/webhook'
-            )}
+            placeholder={t('options.webhook.url_placeholder')}
             extraClass="webhook-url"
           />
 
@@ -110,7 +107,7 @@ const WebhookList = ({ settingKey, label }: Props) => {
           <button
             className={`button webhook-test webhook-test-${webhookTestStates[webhook.id] ?? 'idle'}`}
             onClick={() => testWebhook(webhook.id, webhook.url, webhook.method)}
-            title={t('options.webhook.test_button', 'Test Webhook')}
+            title={t('options.webhook.test_tooltip')}
           >
             ↑
           </button>
@@ -118,7 +115,7 @@ const WebhookList = ({ settingKey, label }: Props) => {
           <button
             className="button is-danger webhook-delete"
             onClick={() => deleteWebhook(webhook.id)}
-            title={t('options.webhook.delete', 'Delete webhook')}
+            title={t('options.webhook.delete')}
           >
             X
           </button>
@@ -126,7 +123,7 @@ const WebhookList = ({ settingKey, label }: Props) => {
       ))}
 
       <button className="button is-primary webhook-add" onClick={addWebhook}>
-        {t('options.webhook.add', 'Add Webhook')}
+        {t('options.webhook.add')}
       </button>
     </div>
   )
