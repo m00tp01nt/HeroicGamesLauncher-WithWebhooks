@@ -33,7 +33,7 @@ const WebhookList = ({ settingKey, label }: Props) => {
   }
 
   return (
-    <div className="webhookList Field">
+    <div className="webhook-list Field">
       <h6>
         <label>{label}</label>
       </h6>
