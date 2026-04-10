@@ -292,6 +292,22 @@ a {
   padding: 0;
 }
 
+.webhook-test {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  font-size: var(--text-2xl);
+}
+
+.webhook-test-success {
+  background-color: var(--success);
+}
+
+.webhook-test-error {
+  background-color: var(--danger);
+}
+
 .webhook-add {
   width: 100%;
 }

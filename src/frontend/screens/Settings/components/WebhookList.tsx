@@ -3,6 +3,9 @@ import { MenuItem } from '@mui/material'
 import { SelectField, TextInputField } from 'frontend/components/UI'
 import useSetting from 'frontend/hooks/useSetting'
 import { WebhookConfig, WebhookHttpMethod } from 'common/types'
+import { useState } from 'react'
+
+type WebhookTestState = 'idle' | 'success' | 'error'
 
 interface Props {
   settingKey: 'webhooksOnGameStart' | 'webhooksOnGameEnd'
@@ -12,6 +15,9 @@ interface Props {
 const WebhookList = ({ settingKey, label }: Props) => {
   const { t } = useTranslation()
   const [webhooks, setWebhooks] = useSetting(settingKey, [])
+  const [webhookTestStates, setWebhookTestStates] = useState<
+    Record<string, WebhookTestState>
+  >({})
 
   const addWebhook = () => {
     const newWebhook: WebhookConfig = {
@@ -30,6 +36,39 @@ const WebhookList = ({ settingKey, label }: Props) => {
 
   const deleteWebhook = (id: string) => {
     setWebhooks(webhooks.filter((wh) => wh.id !== id))
+  }
+
+  const testWebhook = async (
+    id: string,
+    url: string,
+    method: WebhookHttpMethod
+  ) => {
+    try {
+      const response = await fetch(url, {
+        method: method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          gameTitle: t('options.webhook.test.gametitle', 'Example game title')
+        })
+      })
+
+      setWebhookTestStates((prev: Record<string, WebhookTestState>) => ({
+        ...prev,
+        [id]: response.ok ? 'success' : 'error'
+      }))
+    } catch {
+      setWebhookTestStates((prev: Record<string, WebhookTestState>) => ({
+        ...prev,
+        [id]: 'error'
+      }))
+    } finally {
+      setTimeout(() => {
+        setWebhookTestStates((prev: Record<string, WebhookTestState>) => ({
+          ...prev,
+          [id]: 'idle'
+        }))
+      }, 1000)
+    }
   }
 
   return (
@@ -67,6 +106,14 @@ const WebhookList = ({ settingKey, label }: Props) => {
               </MenuItem>
             ))}
           </SelectField>
+
+          <button
+            className={`button webhook-test webhook-test-${webhookTestStates[webhook.id] ?? 'idle'}`}
+            onClick={() => testWebhook(webhook.id, webhook.url, webhook.method)}
+            title={t('options.webhook.test', 'Test Webhook')}
+          >
+            ↑
+          </button>
 
           <button
             className="button is-danger webhook-delete"
