@@ -268,3 +268,46 @@ a {
   gap: var(--space-md);
   border-radius: var(--space-3xs);
 }
+
+/* Webhooks */
+.webhook-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.webhook-method {
+  flex: 0 0 120px;
+}
+
+.webhook-url {
+  flex: 1;
+}
+
+.webhook-delete {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+}
+
+.webhook-test {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  font-size: var(--text-2xl);
+}
+
+.webhook-test-success {
+  background-color: var(--success);
+}
+
+.webhook-test-error {
+  background-color: var(--danger);
+}
+
+.webhook-add {
+  width: 100%;
+}

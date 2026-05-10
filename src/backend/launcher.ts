@@ -14,7 +14,9 @@ import {
   GameSettings,
   KnowFixesInfo,
   LaunchParams,
-  StatusPromise
+  StatusPromise,
+  WebhookConfig,
+  WebhookHttpMethod
 } from 'common/types'
 // This handles launching games, prefix creation etc..
 
@@ -138,6 +140,10 @@ const launchEventCallback: (args: LaunchParams) => StatusPromise = async ({
 
   const { minimizeOnLaunch, noTrayIcon } = GlobalConfig.get().getSettings()
 
+  // Webhooks
+  const { webhooksOnGameStart, webhooksOnGameEnd } =
+    GlobalConfig.get().getSettings()
+
   const startPlayingDate = new Date()
 
   if (!tsStore.has(game.app_name)) {
@@ -228,6 +234,10 @@ const launchEventCallback: (args: LaunchParams) => StatusPromise = async ({
 
   await runBeforeLaunchScript(game, gameSettings, logWriter)
 
+  // Webhooks
+  logInfo('Calling Game Start Webhooks...', LogPrefix.Backend)
+  void callWebhooks(webhooksOnGameStart, game)
+
   sendGameStatusUpdate({
     appName,
     runner,
@@ -259,6 +269,10 @@ const launchEventCallback: (args: LaunchParams) => StatusPromise = async ({
     })
     .finally(async () => {
       await runAfterLaunchScript(game, gameSettings, logWriter)
+
+      logInfo('Calling Game End Webhooks...', LogPrefix.Backend)
+      void callWebhooks(webhooksOnGameEnd, game)
+
       await logWriter.close()
     })
 
@@ -2082,6 +2096,33 @@ async function runScriptForGame(
       resolve(true)
     })
   })
+}
+
+// Webhooks
+function callWebhooks(webhooks: WebhookConfig[], gameInfo: GameInfo): void {
+  for (const webhook of webhooks) {
+    void callWebhook(webhook, gameInfo)
+  }
+}
+
+function callWebhook(webhook: WebhookConfig, gameInfo: GameInfo): void {
+  let body: string | undefined
+  if (webhook.method === WebhookHttpMethod.GET) body = undefined
+  else
+    body = JSON.stringify({
+      gameTitle: gameInfo.title
+    })
+  void fetch(webhook.url, {
+    method: webhook.method,
+    headers: { 'Content-Type': 'application/json' },
+    body: body
+  })
+    .catch(() => {
+      return
+    })
+    .finally(() => {
+      return
+    })
 }
 
 export {
